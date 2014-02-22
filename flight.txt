@@ -1,0 +1,11 @@
+http://gogo-test.apigee.net/v1/aircraft/flightno/DAL583?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q
+http://gogo-test.apigee.net/v1/aircraft/tailno/N328AA?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q
+
+{
+"FlightInfo":{"AirlineName":"Delta Air Lines","AirlineCode":"DAL","TailNumber":"N705DN","AircraftType":"77B","FlightNumber":"DAL583","Status":"In-Air","Departure":{"AirportCode":"KDTW","AirportName":"Wayne County","Lat":"4212N","Lon":"8320W","DepartureTime":"2014-02-21T17:51:00.000Z"},"Destination":{"AirportCode":"ZSPD","AirportName":"Pudong","Lat":"3108N","Lon":"12147E","ArrivalTime":"2014-02-22T07:36:00.000Z"},"GPSData":{}}
+}
+
+{
+"FlightInfo":{"AirlineName":"American Airlines","AirlineCode":"AAL","TailNumber":"N328AA","FlightNumber":"AAL16","Status":"In-Air","Departure":{"AirportCode":"KJFK","AirportName":"John F Kennedy Intl","Lat":"4037N","Lon":"7346W","DepartureTime":"2040-01-01T00:00:00.000Z"},"Destination":{"AirportCode":"ZZZZ","AirportName":"UNKNOWN","ArrivalTime":"2040-01-01T00:00:00.000Z"},"GPSData":{}}
+}
+     
