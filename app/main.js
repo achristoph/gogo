@@ -3,8 +3,9 @@
   chrome.app.runtime.onLaunched.addListener(function() {
     return chrome.app.window.create('/app/index.html', {
       top: 10,
-      width: 500,
-      height: 309
+      left: 1100,
+      width: 350,
+      height: 350
     });
   });
 

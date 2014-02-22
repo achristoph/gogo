@@ -1,25 +1,112 @@
 <!doctype html>
 <html ng-app ng-csp>
 <head>
-    <script src="/js/angular.min.js"></script>
-    <script src="/app/controller.js"></script>
-
-    <link rel="stylesheet" href="/css/gogo.css">
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/angular-route.min.js"></script>
+  <script src="/app/app.js"></script>
+  <script src="/app/controller.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/gogo.css">
 </head>
 <body>
-<h2>Todo</h2>
-<div ng-controller="TodoCtrl">
-    <ul class="unstyled">
-        <li ng-repeat="todo in todos">
-            <input type="checkbox" ng-model="todo.done">
-            <span class="done-{{todo.done}}">{{todo.text}}</span>
-        </li>
-    </ul>
-    <form ng-submit="addTodo()">
-        <input type="text" ng-model="todoText"  size="30"
-               placeholder="add new todo here">
-        <input class="btn-primary" type="submit" value="add">
+<div class="container">
+  <div ng-controller="GogoCtrl">
+    <div class="btn-group btn-group-justified">
+      <div class="btn-group">
+        <button ng-click="viewFlight()" type="button" class="btn btn-primary">Flight</button>
+      </div>
+      <div class="btn-group">
+        <button ng-click="viewNews()" type="button" class="btn btn-success">News</button>
+      </div>
+      <div class="btn-group">
+        <button ng-click="viewLeisure()" type="button" class="btn btn-warning">Leisure</button>
+      </div>
+    </div>
+    <hr/>
+    <form ng-submit="searchFlight()">
+      <input type="text" ng-model="airlineNumberText" size="30"
+             placeholder="search by flight number">
+      <input class="btn-primary" type="submit" value="Search">
     </form>
+    <p/>
+
+    <div id="flight">
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Flight Info</h4>
+
+          <p class="list-group-item-text">AircraftType: {{flight.AircraftType}}</p>
+
+          <p class="list-group-item-text">AirlineCode: {{flight.AirlineCode}}</p>
+
+          <p class="list-group-item-text">AirlineName: {{flight.AirlineName}}</p>
+
+          <p class="list-group-item-text">Status: {{flight.Status}}</p>
+
+          <p class="list-group-item-text">TailNumber: {{flight.TailNumber}}</p>
+
+          <p class="list-group-item-text">Latitude: {{flight.GPSData.Lat}}</p>
+
+          <p class="list-group-item-text">Longitude: {{flight.GPSData.Lon}}</p>
+
+          <p class="list-group-item-text">Latitude: {{flight.GPSData.Alt}}</p>
+
+          <p class="list-group-item-text">Speed: {{flight.GPSData.Speed}}</p>
+
+          <p class="list-group-item-text">TimeStamp: {{flight.GPSData.TimeStamp}}</p>
+        </div>
+      </div>
+
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Departure Info</h4>
+
+          <p class="list-group-item-text">Flight Number: {{flight.FlightNumber}}</p>
+
+          <p class="list-group-item-text">Aircraft Code: {{flight.Destination.AirportCode}}</p>
+
+          <p class="list-group-item-text">Airport Name: {{flight.Destination.AirportName}}</p>
+
+          <p class="list-group-item-text">Departure Time: {{flight.Destination.ArrivalTime}}</p>
+
+          <p class="list-group-item-text">Latitude: {{flight.Destination.Lat}}</p>
+
+          <p class="list-group-item-text">Longitude: {{flight.Destination.Lon}}</p>
+
+        </div>
+      </div>
+
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Arrival Info</h4>
+
+          <p class="list-group-item-text">AircraftCode: {{flight.Destination.AirportCode}}</p>
+
+          <p class="list-group-item-text">AirportName: {{flight.Destination.AirportName}}</p>
+
+          <p class="list-group-item-text">ArrivalTime: {{flight.Destination.ArrivalTime}}</p>
+
+          <p class="list-group-item-text">Latitude: {{flight.Destination.Lat}}</p>
+
+          <p class="list-group-item-text">Longitude: {{flight.Destination.Lon}}</p>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div ng-view>
+    </div>
+    <div id="news">
+
+    </div>
+    <div id="leisure">
+
+    </div>
+  </div>
+  <p/>
 </div>
 </body>
 </html>
