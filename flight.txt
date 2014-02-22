@@ -8,4 +8,3 @@ http://gogo-test.apigee.net/v1/aircraft/tailno/N328AA?apikey=0XOAphNPi8w4nY1LAqV
 {
 "FlightInfo":{"AirlineName":"American Airlines","AirlineCode":"AAL","TailNumber":"N328AA","FlightNumber":"AAL16","Status":"In-Air","Departure":{"AirportCode":"KJFK","AirportName":"John F Kennedy Intl","Lat":"4037N","Lon":"7346W","DepartureTime":"2040-01-01T00:00:00.000Z"},"Destination":{"AirportCode":"ZZZZ","AirportName":"UNKNOWN","ArrivalTime":"2040-01-01T00:00:00.000Z"},"GPSData":{}}
 }
-     

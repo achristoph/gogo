@@ -1,15 +1,14 @@
 <!doctype html>
 <html ng-app ng-csp>
 <head>
-    <script src="angular.min.js"></script>
-    <script src="controller.js"></script>
-    <link rel="stylesheet" href="todo.css">
+    <script src="/js/angular.min.js"></script>
+    <script src="/app/controller.js"></script>
+
+    <link rel="stylesheet" href="/css/gogo.css">
 </head>
 <body>
 <h2>Todo</h2>
 <div ng-controller="TodoCtrl">
-    <span>{{remaining()}} of {{todos.length}} remaining</span>
-    [ <a href="" ng-click="archive()">archive</a> ]
     <ul class="unstyled">
         <li ng-repeat="todo in todos">
             <input type="checkbox" ng-model="todo.done">
