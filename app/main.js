@@ -5,7 +5,7 @@
       top: 10,
       left: 1100,
       width: 350,
-      height: 375
+      height: 500
     });
   });
 

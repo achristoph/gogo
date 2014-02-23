@@ -6,8 +6,17 @@
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var convertDate, searchFlight;
-      $scope.templatePage = chrome.extension.getURL('/app/login.html');
+      var checkLogin, convertDate;
+      checkLogin = function() {
+        var url;
+        url = '/app/login.html';
+        if (localStorage.getItem('loggedIn')) {
+          url = '/app/flight.html';
+          $scope.loggedIn = true;
+        }
+        return $scope.templatePage = chrome.extension.getURL(url);
+      };
+      checkLogin();
       convertDate = function(timestamp) {
         var date, day, formattedDate, month, year;
         console.log(timestamp);
@@ -18,32 +27,16 @@
         formattedDate = "" + month + "/" + day + "/" + year;
         return formattedDate;
       };
-      searchFlight = function(airlineNumber) {
-        var url;
-        url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
-        return $http.get(url).success(function(data, status, headers, config) {
-          $scope.flight = data.FlightInfo;
-          if (data.FlightInfo.ErrorCode) {
-            return $scope.flightSearchSucceed = false;
-          } else {
-            return $scope.flightSearchSucceed = true;
-          }
-        }).error(function(data, status, headers, config) {
-          return alert('Search failed');
-        });
-      };
-      $scope.todos = [
-        {
-          text: 'learn angular',
-          done: true
-        }, {
-          text: 'build an angular app',
-          done: false
-        }
-      ];
       $scope.login = function() {
         $scope.loggedIn = true;
+        localStorage.setItem('loggedIn', true);
         return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
+      };
+      $scope.logout = function() {
+        console.log('logout');
+        $scope.loggedIn = false;
+        localStorage.setItem('loggedIn', false);
+        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
       };
       $scope.viewLogin = function() {
         return $scope.templatePage = chrome.extension.getURL('/app/login.html');
@@ -64,8 +57,8 @@
           items.each(function() {
             var n;
             n = {
-              'title': $(this).children().first('title').text(),
-              'link': $(this).children().first('link').text()
+              'title': $(this).find('title').text(),
+              'link': $(this).find('link').text()
             };
             return newsItems.push(n);
           });
@@ -78,11 +71,23 @@
         return $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
       };
       $scope.searchFlight = function() {
-        return searchFlight($scope.airlineNumberText);
+        var url;
+        console.log(this.airlineNumber);
+        url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + this.airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
+        return $http.get(url).success(function(data, status, headers, config) {
+          $scope.flight = data.FlightInfo;
+          if (data.FlightInfo.ErrorCode) {
+            return $scope.flightSearchSucceed = false;
+          } else {
+            return $scope.flightSearchSucceed = true;
+          }
+        }).error(function(data, status, headers, config) {
+          return console.log('Search failed');
+        });
       };
-      $scope.open = function() {
+      $scope.openNewsLink = function(n) {
         return chrome.tabs.create({
-          url: "http://www.google.com"
+          url: n.link
         });
       };
       return $scope.flightNotExist = function() {

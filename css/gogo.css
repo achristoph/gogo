@@ -2,8 +2,9 @@
     overflow-y: scroll;
     height: 250px
 }
+
 body {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 ul {
@@ -11,5 +12,11 @@ ul {
 }
 
 .ng-hide {
-    display:none;
+    display: none;
+}
+
+.topbar {
+    background-image: url('../images/top-bar.png');
+    height: 40px;
+    width: 350px;
 }

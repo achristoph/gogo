@@ -9,24 +9,29 @@
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/gogo.css">
 </head>
-<body>
-<img src="/images/top-bar.png" width="350px" style="margin-bottom: 20px"></div>
-
+<body style="height:340px;width:350px">
 <div ng-controller="GogoCtrl">
-  <div id="content" class="container">
-    <div ng-include="templatePage"></div>
-  </div>
-  <p/>
+  <div class="topbar">
+    <div style="position: relative;left:295px;top:15px;height:22px">
+      <button ng-click="logout()" type="button" class="btn btn-danger btn-xs" ng-show="loggedIn">Logout</button>
+    </div>
+    <div style="margin-bottom: 30px"></div>
 
-  <div class="btn-group btn-group-justified" ng-show="loggedIn">
-    <div class="btn-group">
-      <button ng-click="viewFlight()" type="button" class="btn btn-primary">Flight</button>
+    <div id="content" class="container">
+      <div ng-include="templatePage"></div>
     </div>
-    <div class="btn-group">
-      <button ng-click="viewNews()" type="button" class="btn btn-success">News</button>
-    </div>
-    <div class="btn-group">
-      <button ng-click="viewLeisure()" type="button" class="btn btn-warning">Leisure</button>
+    <p/>
+
+    <div class="btn-group btn-group-justified" ng-show="loggedIn">
+      <div class="btn-group">
+        <button ng-click="viewFlight()" type="button" class="btn btn-primary">Flight</button>
+      </div>
+      <div class="btn-group">
+        <button ng-click="viewNews()" type="button" class="btn btn-success">News</button>
+      </div>
+      <div class="btn-group">
+        <button ng-click="viewLeisure()" type="button" class="btn btn-warning">Leisure</button>
+      </div>
     </div>
   </div>
 </div>

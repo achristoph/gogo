@@ -5,7 +5,7 @@
   </div>
   <ul class="list-group">
     <li ng-repeat="n in items" class="list-group-item" style="cursor:pointer">
-      <a ng-click="open()" ng-model="news">{{n.title}}</a>
+      <a ng-click="openNewsLink(n)">{{n.title}}</a>
     </li>
   </ul>
 </div>
