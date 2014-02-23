@@ -7,7 +7,8 @@
             "scripts": ["app/main.js"]
         },
 
-    "permissions": ["storage", "*://*/*"],
+    "permissions": ["notifications",
+"storage", "*://*/*"],
     "icons": {
         "16": "icons/icon.png",
         "48": "icons/icon.png",
