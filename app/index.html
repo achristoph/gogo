@@ -16,17 +16,30 @@
   <div ng-controller="GogoCtrl">
     <hr/>
     <div id="content">
-
+        <div id="login">
+          <form role="form">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username/Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter username / email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
       <div id="flight">
         <form ng-submit="searchFlight()">
-          <input type="text" ng-model="airlineNumberText" size="30"
+          <input type="text" class="form-control" ng-model="airlineNumberText" size="30"
                  placeholder="search by flight number">
-          <input class="btn-primary" type="submit" value="Search">
+          <input class="btn btn-primary" type="submit" value="Search">
         </form>
         <p/>
 
         <div id="flightInfo" ng-hide="flightNotExist()">
-          <div ng-hide="flightSearchSucceed">Error</div>
+          <div ng-hide="flightSearchSucceed">Flight not Found</div>
           <div ng-show="flightSearchSucceed">
             <div class="list-group">
               <div class="list-group-item">
@@ -94,6 +107,7 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
 
 
     <div id="news">
@@ -109,13 +123,23 @@
     </div>
 
       <div id="news" style="display: none">
+=======
+      <div id="news">
+        <div>
+          <h4>Google News</h4>
+          <h5>Top Stories</h5>
+        </div>
+>>>>>>> 6aec0bcbe8f5a04f3839a82dd3fec7fae1ac98f7
         <ul class="list-group">
           <li ng-repeat="n in items" class="list-group-item" style="cursor:pointer">
             <a ng-click="open()" ng-model="news">{{n.title}}</a>
           </li>
         </ul>
       </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6aec0bcbe8f5a04f3839a82dd3fec7fae1ac98f7
       <div id="leisure">
         <div class="media">
           <a class="pull-left" href="#">
