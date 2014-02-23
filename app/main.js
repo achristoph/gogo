@@ -9,6 +9,11 @@
     });
   });
 
+chrome.notifications.create(id, options, creationCallback);
+
+
 }).call(this);
+
+
 
 //# sourceMappingURL=main.map
