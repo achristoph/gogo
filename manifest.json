@@ -2,16 +2,21 @@
     "manifest_version": 2,
     "name": "Gogo",
     "version": "1",
-    "app": {
+
         "background": {
             "scripts": ["app/main.js"]
-        }
-    },
+
+        },
     "permissions": ["storage", "*://*/*"],
     "icons": {
         "16": "icons/icon.png",
         "48": "icons/icon.png",
         "128": "icons/icon.png"
+    },
+    "browser_action": {
+        "default_icon":"icons/icon.png",
+        "default_title":"gogo dash",
+        "default_popup":"app/index.html"
     }
 
 }
