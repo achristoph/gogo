@@ -20,3 +20,7 @@ ul {
     height: 40px;
     width: 350px;
 }
+
+*:focus {
+    outline:none;
+}
