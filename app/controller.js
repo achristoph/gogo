@@ -2,14 +2,12 @@
 (function() {
   var Gogo;
 
-  Gogo = angular.module('Gogo', []);
+  Gogo = angular.module('Gogo', ['ngRoute']);
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var convertDate, searchFlight, searchNews;
-      $("#flight").hide();
-      $("#news").hide();
-      $("#leisure").hide();
+      var convertDate, searchFlight;
+      $scope.templatePage = chrome.extension.getURL('/app/login.html');
       convertDate = function(timestamp) {
         var date, day, formattedDate, month, year;
         console.log(timestamp);
@@ -25,7 +23,6 @@
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
           $scope.flight = data.FlightInfo;
-          console.log(data.FlightInfo);
           if (data.FlightInfo.ErrorCode) {
             return $scope.flightSearchSucceed = false;
           } else {
@@ -35,8 +32,28 @@
           return alert('Search failed');
         });
       };
-      searchNews = function() {
+      $scope.todos = [
+        {
+          text: 'learn angular',
+          done: true
+        }, {
+          text: 'build an angular app',
+          done: false
+        }
+      ];
+      $scope.login = function() {
+        $scope.loggedIn = true;
+        return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
+      };
+      $scope.viewLogin = function() {
+        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
+      };
+      $scope.viewFlight = function() {
+        return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
+      };
+      $scope.viewNews = function() {
         var url;
+        $scope.templatePage = chrome.extension.getURL('/app/news.html');
         url = "http://news.google.com/?output=rss";
         return $http.get(url).success(function(data, status, headers, config) {
           var items, newsItems, xml, xmlDoc;
@@ -57,33 +74,11 @@
           return console.log('Search Failed');
         });
       };
-      searchNews();
-      $scope.todos = [
-        {
-          text: 'learn angular',
-          done: true
-        }, {
-          text: 'build an angular app',
-          done: false
-        }
-      ];
-      $scope.viewFlight = function() {
-        console.log("Flight");
-        return $location.url("/flight");
-      };
-      $scope.viewNews = function() {
-        $location.url("/news");
-        return console.log($location.url());
-      };
       $scope.viewLeisure = function() {
-        $location.url("/leisure");
-        return console.log($location.url());
+        return $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
       };
       $scope.searchFlight = function() {
         return searchFlight($scope.airlineNumberText);
-      };
-      $scope.searchNews = function() {
-        return console.log($scope.news);
       };
       $scope.open = function() {
         return chrome.tabs.create({
