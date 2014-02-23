@@ -72,19 +72,29 @@ Gogo = angular.module('Gogo', ['ngRoute'])
   $scope.searchFlight = () ->
     url = "http://gogo-test.apigee.net/v1/aircraft/flightno/#{this.airlineNumber}?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q"
     $http.get(url).success((data, status, headers, config)->
+      departureTime = data.FlightInfo.Departure.DepartureTime
+      arrivalTime = data.FlightInfo.Destination.ArrivalTime
+      data.FlightInfo.Departure.DepartureTime = moment(departureTime).format("dddd, MMMM Do YYYY, h:mm:ss a")
+      data.FlightInfo.Destination.ArrivalTime = moment(arrivalTime).format("dddd, MMMM Do YYYY, h:mm:ss a")
       $scope.flight = data.FlightInfo
       if (data.FlightInfo.ErrorCode)
         $scope.flightSearchSucceed = false
       else
+        $scope.flightFound = true
         $scope.flightSearchSucceed = true
 
     ).error( (data, status, headers, config) ->
       console.log 'Search failed'
     )
 
+  $scope.changeFlight = () ->
+    $scope.flightFound = false
+    $scope.flight = undefined
+
   $scope.openNewsLink = (n) ->
     chrome.tabs.create({url: n.link})
 
   $scope.flightNotExist = () ->
     return angular.isUndefined($scope.flight)
+
 ]

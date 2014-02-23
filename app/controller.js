@@ -85,15 +85,25 @@
         var url;
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + this.airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
+          var arrivalTime, departureTime;
+          departureTime = data.FlightInfo.Departure.DepartureTime;
+          arrivalTime = data.FlightInfo.Destination.ArrivalTime;
+          data.FlightInfo.Departure.DepartureTime = moment(departureTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
+          data.FlightInfo.Destination.ArrivalTime = moment(arrivalTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
           $scope.flight = data.FlightInfo;
           if (data.FlightInfo.ErrorCode) {
             return $scope.flightSearchSucceed = false;
           } else {
+            $scope.flightFound = true;
             return $scope.flightSearchSucceed = true;
           }
         }).error(function(data, status, headers, config) {
           return console.log('Search failed');
         });
+      };
+      $scope.changeFlight = function() {
+        $scope.flightFound = false;
+        return $scope.flight = void 0;
       };
       $scope.openNewsLink = function(n) {
         return chrome.tabs.create({
