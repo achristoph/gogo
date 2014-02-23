@@ -6,7 +6,7 @@
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var convertDate, searchFlight;
+      var convertDate, searchFlight, searchNews;
       convertDate = function(timestamp) {
         var date, day, formattedDate, month, year;
         console.log(timestamp);
@@ -23,13 +23,32 @@
         return $http.get(url).success(function(data, status, headers, config) {
           return $scope.flight = data.FlightInfo;
         }).error(function(data, status, headers, config) {
-          console.log(data);
-          console.log(status);
-          console.log(headers);
-          console.log(config);
-          return console.log('error');
+          return alert('Search failed');
         });
       };
+      searchNews = function() {
+        var url;
+        url = "http://news.google.com/?output=rss";
+        return $http.get(url).success(function(data, status, headers, config) {
+          var items, newsItems, xml, xmlDoc;
+          xmlDoc = $.parseXML(data);
+          xml = $(xmlDoc);
+          items = xml.find("item");
+          newsItems = [];
+          items.each(function() {
+            var n;
+            n = {
+              'title': $(this).children().first('title').text(),
+              'link': $(this).children().first('link').text()
+            };
+            return newsItems.push(n);
+          });
+          return $scope.items = newsItems;
+        }).error(function(data, status, headers, config) {
+          return console.log('Search Failed');
+        });
+      };
+      searchNews();
       $scope.todos = [
         {
           text: 'learn angular',
@@ -51,8 +70,16 @@
         $location.url("/leisure");
         return console.log($location.url());
       };
-      return $scope.searchFlight = function() {
+      $scope.searchFlight = function() {
         return searchFlight($scope.airlineNumberText);
+      };
+      $scope.searchNews = function() {
+        return console.log($scope.news);
+      };
+      return $scope.open = function() {
+        return chrome.tabs.create({
+          url: "http://www.google.com"
+        });
       };
     }
   ];

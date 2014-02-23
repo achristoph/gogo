@@ -25,14 +25,15 @@
       </div>
     </div>
     <hr/>
-    <form ng-submit="searchFlight()">
-      <input type="text" ng-model="airlineNumberText" size="30"
-             placeholder="search by flight number">
-      <input class="btn-primary" type="submit" value="Search">
-    </form>
-    <p/>
 
-    <div id="flight">
+    <div id="flight" style="display: none">
+      <form ng-submit="searchFlight()">
+        <input type="text" ng-model="airlineNumberText" size="30"
+               placeholder="search by flight number">
+        <input class="btn-primary" type="submit" value="Search">
+      </form>
+      <p/>
+
       <div class="list-group">
         <div class="list-group-item">
           <h4 class="list-group-item-heading">Flight Info</h4>
@@ -96,12 +97,14 @@
       </div>
     </div>
 
-
-    <div ng-view>
-    </div>
     <div id="news">
-
+      <ul class="list-group">
+        <li ng-repeat="n in items" class="list-group-item" style="cursor:pointer">
+          <a ng-click="open()" ng-model="news">{{n.title}}</a>
+        </li>
+      </ul>
     </div>
+
     <div id="leisure">
 
     </div>

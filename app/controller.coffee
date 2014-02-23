@@ -21,12 +21,26 @@ Gogo = angular.module('Gogo', [])
     $http.get(url).success((data, status, headers, config)->
       $scope.flight = data.FlightInfo
     ).error( (data, status, headers, config) ->
-      console.log data
-      console.log status
-      console.log headers
-      console.log config
-      console.log 'error'
+      alert('Search failed')
     )
+
+  searchNews = () ->
+    url = "http://news.google.com/?output=rss"
+    $http.get(url).success((data, status, headers, config)->
+      xmlDoc = $.parseXML(data)
+      xml = $(xmlDoc)
+      items = xml.find("item")
+      newsItems = []
+      items.each(() ->
+        n = {'title': $(this).children().first('title').text(), 'link': $(this).children().first('link').text() }
+        newsItems.push(n)
+      )
+      $scope.items = newsItems
+    ).error( (data, status, headers, config) ->
+      console.log 'Search Failed'
+    )
+
+  searchNews()
 
   $scope.todos = [
     {text: 'learn angular', done: true},
@@ -48,4 +62,9 @@ Gogo = angular.module('Gogo', [])
   $scope.searchFlight = () ->
     searchFlight($scope.airlineNumberText)
 
+  $scope.searchNews = () ->
+    console.log $scope.news
+
+  $scope.open = () ->
+    chrome.tabs.create({url: "http://www.google.com"})
 ]
