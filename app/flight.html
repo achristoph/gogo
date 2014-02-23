@@ -11,68 +11,35 @@
 
   <div id="flightInfo" ng-hide="flightNotExist()">
     <div ng-hide="flightSearchSucceed">Flight not found</div>
-    <div ng-show="flightSearchSucceed">
+    
+
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Departure</h4>
+          <p class="list-group-item-text">Flight Number: {{flight.FlightNumber}}</p>
+          <p class="list-group-item-text">Airport Name: {{flight.Destination.AirportName}}</p>
+          <p class="list-group-item-text">Departure Time: {{flight.Destination.ArrivalTime}}</p>
+        </div>
+      </div>
+
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Arrival</h4>
+          <p class="list-group-item-text">AirportName: {{flight.Destination.AirportName}}</p>
+          <p class="list-group-item-text">ArrivalTime: {{flight.Destination.ArrivalTime}}</p>
+        </div>
+      </div>
+
+      <div ng-show="flightSearchSucceed">
       <div class="list-group">
         <div class="list-group-item">
           <h4 class="list-group-item-heading">Flight Info</h4>
-
-          <p class="list-group-item-text">Airline Number: {{flight.FlightNumber}}</p>
-<!-- 
-          <p class="list-group-item-text">Aircraft Type: {{flight.AircraftType}}</p>
-
-          <p class="list-group-item-text">Airline Code: {{flight.AirlineCode}}</p> -->
-
           <p class="list-group-item-text">Airline Name: {{flight.AirlineName}}</p>
-
           <p class="list-group-item-text">Status: {{flight.Status}}</p>
-
-<!--           <p class="list-group-item-text">Tail Number: {{flight.TailNumber}}</p> -->
-
           <p class="list-group-item-text">Latitude: {{flight.GPSData.Lat}}</p>
-
           <p class="list-group-item-text">Longitude: {{flight.GPSData.Lon}}</p>
-
-<!--           <p class="list-group-item-text">Latitude: {{flight.GPSData.Alt}}</p> -->
-
           <p class="list-group-item-text">Speed: {{flight.GPSData.Speed}}</p>
-
           <p class="list-group-item-text">GPS Timestamp: {{flight.GPSData.TimeStamp}}</p>
-        </div>
-      </div>
-
-      <div class="list-group">
-        <div class="list-group-item">
-          <h4 class="list-group-item-heading">Departure Info</h4>
-
-          <p class="list-group-item-text">Flight Number: {{flight.FlightNumber}}</p>
-
-          <p class="list-group-item-text">Aircraft Code: {{flight.Destination.AirportCode}}</p>
-
-          <p class="list-group-item-text">Airport Name: {{flight.Destination.AirportName}}</p>
-
-          <p class="list-group-item-text">Departure Time: {{flight.Destination.ArrivalTime}}</p>
-
-          <p class="list-group-item-text">Latitude: {{flight.Destination.Lat}}</p>
-
-          <p class="list-group-item-text">Longitude: {{flight.Destination.Lon}}</p>
-
-        </div>
-      </div>
-
-      <div class="list-group">
-        <div class="list-group-item">
-          <h4 class="list-group-item-heading">Arrival Info</h4>
-
-          <p class="list-group-item-text">AircraftCode: {{flight.Destination.AirportCode}}</p>
-
-          <p class="list-group-item-text">AirportName: {{flight.Destination.AirportName}}</p>
-
-          <p class="list-group-item-text">ArrivalTime: {{flight.Destination.ArrivalTime}}</p>
-
-          <p class="list-group-item-text">Latitude: {{flight.Destination.Lat}}</p>
-
-          <p class="list-group-item-text">Longitude: {{flight.Destination.Lon}}</p>
-
         </div>
       </div>
     </div>
