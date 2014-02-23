@@ -7,6 +7,7 @@
             "scripts": ["app/main.js"]
 
         },
+
     "permissions": ["storage", "*://*/*"],
     "icons": {
         "16": "icons/icon.png",
@@ -14,9 +15,14 @@
         "128": "icons/icon.png"
     },
     "browser_action": {
-        "default_icon":"icons/icon.png",
-        "default_title":"gogo dash",
-        "default_popup":"app/index.html"
-    }
+        "default_icon": "icons/icon.png",
+        "default_title": "gogo dash",
+        "default_popup": "app/index.html"
+    },
+    "web_accessible_resources" :[
+        "/app/flight.html",
+        "/app/news.html",
+        "/app/leisure.html"
+    ]
 
 }
