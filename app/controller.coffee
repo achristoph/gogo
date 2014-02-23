@@ -41,6 +41,22 @@ Gogo = angular.module('Gogo', ['ngRoute'])
       console.log 'Search failed'
     )
 
+  searchTopMovies = () ->
+    topMovies = []
+
+    $.getJSON('../videoCatalog.json').done((data)->
+      _.each(data.Entries, (element, index, list) ->
+        x = _.find(element["@categories"].split(","), (n) ->
+          n == "2"
+        )
+        if x == "2"
+          element["@duration"] = parseInt(element["@duration"]) / 60
+          topMovies.push(element)
+      )
+      $scope.$apply () ->
+        $scope.movies = topMovies
+    )
+
   checkLogin = () ->
     url = '/app/login.html'
     if localStorage.getItem('loggedIn')
@@ -50,10 +66,12 @@ Gogo = angular.module('Gogo', ['ngRoute'])
         url = localStorage.getItem('url')
         if url == '/app/news.html'
           searchNews()
-    #        else if url == '/app/flight.html'
-    #          airlineNumber = localStorage.getItem('airlineNumber')
-    #          if airlineNumber
-    #            searchFlight(airlineNumber)
+        else if url == '/app/flight.html'
+          airlineNumber = localStorage.getItem('airlineNumber')
+          if airlineNumber
+            searchFlight(airlineNumber)
+        else if url == '/app/leisure.html'
+            searchTopMovies()
 
     $scope.templatePage = chrome.extension.getURL(url)
 
@@ -81,22 +99,6 @@ Gogo = angular.module('Gogo', ['ngRoute'])
     localStorage.setItem('url', '/app/news.html')
     searchNews()
 
-  searchTopMovies = () ->
-    topMovies = []
-
-    $.getJSON('../videoCatalog.json').done((data)->
-      _.each(data.Entries, (element, index, list) ->
-        x = _.find(element["@categories"].split(","), (n) ->
-          n == "2"
-        )
-        if x == "2"
-          element["@duration"] = parseInt(element["@duration"]) / 60
-          topMovies.push(element)
-      )
-#      console.log topMovies
-      $scope.$apply () ->
-        $scope.movies = topMovies
-    )
 
   $scope.viewLeisure = () ->
     $scope.templatePage = chrome.extension.getURL('/app/leisure.html')

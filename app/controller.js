@@ -50,8 +50,27 @@
           return console.log('Search failed');
         });
       };
+      searchTopMovies = function() {
+        var topMovies;
+        topMovies = [];
+        return $.getJSON('../videoCatalog.json').done(function(data) {
+          _.each(data.Entries, function(element, index, list) {
+            var x;
+            x = _.find(element["@categories"].split(","), function(n) {
+              return n === "2";
+            });
+            if (x === "2") {
+              element["@duration"] = parseInt(element["@duration"]) / 60;
+              return topMovies.push(element);
+            }
+          });
+          return $scope.$apply(function() {
+            return $scope.movies = topMovies;
+          });
+        });
+      };
       checkLogin = function() {
-        var url;
+        var airlineNumber, url;
         url = '/app/login.html';
         if (localStorage.getItem('loggedIn')) {
           $scope.loggedIn = true;
@@ -60,6 +79,13 @@
             url = localStorage.getItem('url');
             if (url === '/app/news.html') {
               searchNews();
+            } else if (url === '/app/flight.html') {
+              airlineNumber = localStorage.getItem('airlineNumber');
+              if (airlineNumber) {
+                searchFlight(airlineNumber);
+              }
+            } else if (url === '/app/leisure.html') {
+              searchTopMovies();
             }
           }
         }
@@ -87,25 +113,6 @@
         $scope.templatePage = chrome.extension.getURL('/app/news.html');
         localStorage.setItem('url', '/app/news.html');
         return searchNews();
-      };
-      searchTopMovies = function() {
-        var topMovies;
-        topMovies = [];
-        return $.getJSON('../videoCatalog.json').done(function(data) {
-          _.each(data.Entries, function(element, index, list) {
-            var x;
-            x = _.find(element["@categories"].split(","), function(n) {
-              return n === "2";
-            });
-            if (x === "2") {
-              element["@duration"] = parseInt(element["@duration"]) / 60;
-              return topMovies.push(element);
-            }
-          });
-          return $scope.$apply(function() {
-            return $scope.movies = topMovies;
-          });
-        });
       };
       $scope.viewLeisure = function() {
         $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
