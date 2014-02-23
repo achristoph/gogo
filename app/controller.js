@@ -7,6 +7,7 @@
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
       var convertDate, searchFlight, searchNews;
+      console.log(angular.isUndefined($scope.flight));
       convertDate = function(timestamp) {
         var date, day, formattedDate, month, year;
         console.log(timestamp);
@@ -21,7 +22,12 @@
         var url;
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
-          return $scope.flight = data.FlightInfo;
+          $scope.flight = data.FlightInfo;
+          if (data.FlightInfo.ErrorCode) {
+            return $scope.flightSearchSucceed = true;
+          } else {
+            return $scope.flightSearchSucceed = true;
+          }
         }).error(function(data, status, headers, config) {
           return alert('Search failed');
         });
@@ -76,10 +82,13 @@
       $scope.searchNews = function() {
         return console.log($scope.news);
       };
-      return $scope.open = function() {
+      $scope.open = function() {
         return chrome.tabs.create({
           url: "http://www.google.com"
         });
+      };
+      return $scope.flightNotExist = function() {
+        return angular.isUndefined($scope.flight);
       };
     }
   ];
