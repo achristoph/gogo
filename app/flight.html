@@ -1,7 +1,10 @@
 <div id="flight">
   <form ng-submit="searchFlight()">
+          <h4>Flight information</h4>
+          <h6>Enter your flight number to stay up to date on your flight</h6>
     <input type="text" class="form-control" ng-model="airlineNumber" size="30"
            placeholder="Search by flight number">
+           <span><br></span>
     <input tyle="margin-top: 5px" type="submit" class="btn btn-primary" value="Search">
   </form>
   <p/>
@@ -14,26 +17,26 @@
           <h4 class="list-group-item-heading">Flight Info</h4>
 
           <p class="list-group-item-text">Airline Number: {{flight.FlightNumber}}</p>
-
+<!-- 
           <p class="list-group-item-text">Aircraft Type: {{flight.AircraftType}}</p>
 
-          <p class="list-group-item-text">Airline Code: {{flight.AirlineCode}}</p>
+          <p class="list-group-item-text">Airline Code: {{flight.AirlineCode}}</p> -->
 
           <p class="list-group-item-text">Airline Name: {{flight.AirlineName}}</p>
 
           <p class="list-group-item-text">Status: {{flight.Status}}</p>
 
-          <p class="list-group-item-text">Tail Number: {{flight.TailNumber}}</p>
+<!--           <p class="list-group-item-text">Tail Number: {{flight.TailNumber}}</p> -->
 
           <p class="list-group-item-text">Latitude: {{flight.GPSData.Lat}}</p>
 
           <p class="list-group-item-text">Longitude: {{flight.GPSData.Lon}}</p>
 
-          <p class="list-group-item-text">Latitude: {{flight.GPSData.Alt}}</p>
+<!--           <p class="list-group-item-text">Latitude: {{flight.GPSData.Alt}}</p> -->
 
           <p class="list-group-item-text">Speed: {{flight.GPSData.Speed}}</p>
 
-          <p class="list-group-item-text">TimeStamp: {{flight.GPSData.TimeStamp}}</p>
+          <p class="list-group-item-text">GPS Timestamp: {{flight.GPSData.TimeStamp}}</p>
         </div>
       </div>
 
