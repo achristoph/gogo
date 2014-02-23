@@ -1,8 +1,9 @@
 Gogo = angular.module('Gogo', [])
 
 @GogoCtrl =  ['$scope', '$http', '$location', ($scope, $http, $location) ->
-  console.log angular.isUndefined($scope.flight)
-
+  $("#flight").hide()
+  $("#news").hide()
+  $("#leisure").hide()
 
 #  console.log $location.url()
 #  console.log $route.current.templateUrl
@@ -22,8 +23,9 @@ Gogo = angular.module('Gogo', [])
     url = "http://gogo-test.apigee.net/v1/aircraft/flightno/#{airlineNumber}?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q"
     $http.get(url).success((data, status, headers, config)->
       $scope.flight = data.FlightInfo
+      console.log data.FlightInfo
       if (data.FlightInfo.ErrorCode)
-        $scope.flightSearchSucceed = true
+        $scope.flightSearchSucceed = false
       else
         $scope.flightSearchSucceed = true
 

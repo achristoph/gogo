@@ -7,7 +7,9 @@
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
       var convertDate, searchFlight, searchNews;
-      console.log(angular.isUndefined($scope.flight));
+      $("#flight").hide();
+      $("#news").hide();
+      $("#leisure").hide();
       convertDate = function(timestamp) {
         var date, day, formattedDate, month, year;
         console.log(timestamp);
@@ -23,8 +25,9 @@
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
           $scope.flight = data.FlightInfo;
+          console.log(data.FlightInfo);
           if (data.FlightInfo.ErrorCode) {
-            return $scope.flightSearchSucceed = true;
+            return $scope.flightSearchSucceed = false;
           } else {
             return $scope.flightSearchSucceed = true;
           }
