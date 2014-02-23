@@ -6,7 +6,7 @@
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var checkLogin, convertDate, searchNews;
+      var checkLogin, searchFlight, searchNews;
       searchNews = function() {
         var url;
         url = "http://news.google.com/?output=rss";
@@ -29,6 +29,30 @@
           return console.log('Search Failed');
         });
       };
+      searchFlight = function(airlineNumber) {
+        var url;
+        console.log('sssssssssss');
+        console.log(airlineNumber);
+        url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
+        return $http.get(url).success(function(data, status, headers, config) {
+          var arrivalTime, departureTime;
+          console.log("SUCCESS");
+          $scope.flight = data.FlightInfo;
+          if (data.FlightInfo.ErrorCode) {
+            console.log(data);
+            return $scope.flightSearchSucceed = false;
+          } else {
+            departureTime = data.FlightInfo.Departure.DepartureTime;
+            arrivalTime = data.FlightInfo.Destination.ArrivalTime;
+            data.FlightInfo.Departure.DepartureTime = moment(departureTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            data.FlightInfo.Destination.ArrivalTime = moment(arrivalTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            $scope.flightFound = true;
+            return $scope.flightSearchSucceed = true;
+          }
+        }).error(function(data, status, headers, config) {
+          return console.log('Search failed');
+        });
+      };
       checkLogin = function() {
         var url;
         url = '/app/login.html';
@@ -45,16 +69,6 @@
         return $scope.templatePage = chrome.extension.getURL(url);
       };
       checkLogin();
-      convertDate = function(timestamp) {
-        var date, day, formattedDate, month, year;
-        console.log(timestamp);
-        date = new Date(timestamp * 1000);
-        day = date.getDay();
-        month = date.getMonth();
-        year = date.getFullYear();
-        formattedDate = "" + month + "/" + day + "/" + year;
-        return formattedDate;
-      };
       $scope.login = function() {
         $scope.loggedIn = true;
         localStorage.setItem('loggedIn', true);
@@ -82,24 +96,8 @@
         return localStorage.setItem('url', '/app/leisure.html');
       };
       $scope.searchFlight = function() {
-        var url;
-        url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + this.airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
-        return $http.get(url).success(function(data, status, headers, config) {
-          var arrivalTime, departureTime;
-          departureTime = data.FlightInfo.Departure.DepartureTime;
-          arrivalTime = data.FlightInfo.Destination.ArrivalTime;
-          data.FlightInfo.Departure.DepartureTime = moment(departureTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
-          data.FlightInfo.Destination.ArrivalTime = moment(arrivalTime).format("dddd, MMMM Do YYYY, h:mm:ss a");
-          $scope.flight = data.FlightInfo;
-          if (data.FlightInfo.ErrorCode) {
-            return $scope.flightSearchSucceed = false;
-          } else {
-            $scope.flightFound = true;
-            return $scope.flightSearchSucceed = true;
-          }
-        }).error(function(data, status, headers, config) {
-          return console.log('Search failed');
-        });
+        searchFlight(this.airlineNumber);
+        return localStorage.setItem('airlineNumber', this.airlineNumber);
       };
       $scope.changeFlight = function() {
         $scope.flightFound = false;
