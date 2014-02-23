@@ -1,6 +1,8 @@
 Gogo = angular.module('Gogo', [])
 
 @GogoCtrl =  ['$scope', '$http', '$location', ($scope, $http, $location) ->
+  console.log angular.isUndefined($scope.flight)
+
 
 #  console.log $location.url()
 #  console.log $route.current.templateUrl
@@ -20,6 +22,11 @@ Gogo = angular.module('Gogo', [])
     url = "http://gogo-test.apigee.net/v1/aircraft/flightno/#{airlineNumber}?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q"
     $http.get(url).success((data, status, headers, config)->
       $scope.flight = data.FlightInfo
+      if (data.FlightInfo.ErrorCode)
+        $scope.flightSearchSucceed = true
+      else
+        $scope.flightSearchSucceed = true
+
     ).error( (data, status, headers, config) ->
       alert('Search failed')
     )
@@ -67,4 +74,10 @@ Gogo = angular.module('Gogo', [])
 
   $scope.open = () ->
     chrome.tabs.create({url: "http://www.google.com"})
+
+  $scope.flightNotExist = () ->
+    return angular.isUndefined($scope.flight)
+#
+#  $scope.showFlightSearchError = () ->
+#    !$scope.flightNotExist && !flightSearchSucceed
 ]
