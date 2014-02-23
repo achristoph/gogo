@@ -6,7 +6,7 @@
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var checkLogin, searchFlight, searchNews;
+      var checkLogin, searchFlight, searchNews, searchTopMovies;
       searchNews = function() {
         var url;
         url = "http://news.google.com/?output=rss";
@@ -31,12 +31,9 @@
       };
       searchFlight = function(airlineNumber) {
         var url;
-        console.log('sssssssssss');
-        console.log(airlineNumber);
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
           var arrivalTime, departureTime;
-          console.log("SUCCESS");
           $scope.flight = data.FlightInfo;
           if (data.FlightInfo.ErrorCode) {
             console.log(data);
@@ -91,9 +88,29 @@
         localStorage.setItem('url', '/app/news.html');
         return searchNews();
       };
+      searchTopMovies = function() {
+        var topMovies;
+        topMovies = [];
+        return $.getJSON('../videoCatalog.json').done(function(data) {
+          _.each(data.Entries, function(element, index, list) {
+            var x;
+            x = _.find(element["@categories"].split(","), function(n) {
+              return n === "2";
+            });
+            if (x === "2") {
+              element["@duration"] = parseInt(element["@duration"]) / 60;
+              return topMovies.push(element);
+            }
+          });
+          return $scope.$apply(function() {
+            return $scope.movies = topMovies;
+          });
+        });
+      };
       $scope.viewLeisure = function() {
         $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
-        return localStorage.setItem('url', '/app/leisure.html');
+        localStorage.setItem('url', '/app/leisure.html');
+        return searchTopMovies();
       };
       $scope.searchFlight = function() {
         searchFlight(this.airlineNumber);

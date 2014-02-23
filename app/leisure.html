@@ -1,71 +1,56 @@
 <div id="leisure">
-    <h4>TOP MOVIES</h4>
-  <div class="media">
+  <h4>TOP MOVIES</h4>
+  <div ng-repeat="m in movies" class="media">
     <a class="pull-left" href="#">
       <img class="media-object" src="/images/movie_icon.gif" alt="...">
     </a>
 
     <div class="media-body">
-      <h4 class="media-heading"><a href="#"> Terminator VI</a></h4>
-        <span>Arnold Schwarzennegger kicks Cinderella's ass.</span>
-        <span>Duration: 1h 31m</span>    </div>
+      <h4 class="media-heading"><a href="#">{{m["@title"]}}</a></h4>
+      <span><b>Synopsys:</b> {{m["@synopsys"]}}</span><br/>
+      <span><b>Duration:</b> {{m["@duration"]}} minutes</span></div>
   </div>
-  <div class="media">
-    <a class="pull-left" href="#">
-      <img class="media-object" src="/images/movie_icon.gif" alt="...">
-    </a>
 
-    <div class="media-body">
+
+    <div onclick="notify()" style="text-align: center; margin-top:10px">
+      <a href="#">View all Gogo video offerings</a>
+    </div>
+
+    <h4>MUSIC</h4>
+
+    <div class="media">
+      <a class="pull-left" href="#">
+        <img class="media-object" src="/images/music_icon.gif" alt="...">
+      </a>
+
+      <div class="media-body">
         <h4 class="media-heading"><a href="#"> Terminator VI</a></h4>
-        <span>Arnold Schwarzennegger kicks Cinderella's ass.</span>
-        <span>Duration: 1h 31m</span>    </div>
 
-      <div class="media">
-          <a class="pull-left" href="#">
-              <img class="media-object" src="/images/movie_icon.gif" alt="...">
-          </a>
+        <p>Artist: Green Eyed Carrots<br>Genre: Bad Music</p>
 
-          <div class="media-body">
-              <h4 class="media-heading"><a href="#"> Terminator VI</a></h4>
-              <p>Arnold Schwarzennegger kicks Cinderella's ass.</span>
-              <span>Duration: 1h 31m</span>    </div>
       </div>
 
-      <div onclick="notify()" style="text-align: center; margin-top:10px">
-          <a  href="#">View all Gogo video offerings</a>
+      <div style="text-align: center; margin-top:10px">
+        <a href="#">View all Gogo music offerings</a>
       </div>
+      <h4>GAMES</h4>
 
-      <h4>MUSIC</h4>
       <div class="media">
-          <a class="pull-left" href="#">
-              <img class="media-object" src="/images/music_icon.gif" alt="...">
-          </a>
+        <a class="pull-left" href="#">
+          <img class="media-object" src="/images/music_icon.gif" alt="...">
+        </a>
 
-          <div class="media-body">
-              <h4 class="media-heading"><a href="#"> Terminator VI</a></h4>
-              <p>Artist: Green Eyed Carrots<br>Genre: Bad Music</p>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="#">Plane Race</a></h4>
 
-          </div>
+          <p>Fire up your engines and fly to the moon.</p>
 
-          <div style="text-align: center; margin-top:10px">
-              <a href="#">View all Gogo music offerings</a>
-          </div>
-          <h4>GAMES</h4>
-          <div class="media">
-              <a class="pull-left" href="#">
-                  <img class="media-object" src="/images/music_icon.gif" alt="...">
-              </a>
+        </div>
 
-              <div class="media-body">
-                  <h4 class="media-heading"><a href="#">Plane Race</a></h4>
-                  <p>Fire up your engines and fly to the moon.</p>
-
-              </div>
-
-              <div style="text-align: center; margin-top:10px">
-                  <a href="#">View all Gogo game offerings</a>
-              </div>
-          </div>
+        <div style="text-align: center; margin-top:10px">
+          <a href="#">View all Gogo game offerings</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
