@@ -6,47 +6,9 @@
 
   this.GogoCtrl = [
     '$scope', '$http', '$location', function($scope, $http, $location) {
-      var checkLogin, convertDate;
-      checkLogin = function() {
+      var checkLogin, convertDate, searchNews;
+      searchNews = function() {
         var url;
-        url = '/app/login.html';
-        if (localStorage.getItem('loggedIn')) {
-          url = '/app/flight.html';
-          $scope.loggedIn = true;
-        }
-        return $scope.templatePage = chrome.extension.getURL(url);
-      };
-      checkLogin();
-      convertDate = function(timestamp) {
-        var date, day, formattedDate, month, year;
-        console.log(timestamp);
-        date = new Date(timestamp * 1000);
-        day = date.getDay();
-        month = date.getMonth();
-        year = date.getFullYear();
-        formattedDate = "" + month + "/" + day + "/" + year;
-        return formattedDate;
-      };
-      $scope.login = function() {
-        $scope.loggedIn = true;
-        localStorage.setItem('loggedIn', true);
-        return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
-      };
-      $scope.logout = function() {
-        console.log('logout');
-        $scope.loggedIn = false;
-        localStorage.setItem('loggedIn', false);
-        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
-      };
-      $scope.viewLogin = function() {
-        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
-      };
-      $scope.viewFlight = function() {
-        return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
-      };
-      $scope.viewNews = function() {
-        var url;
-        $scope.templatePage = chrome.extension.getURL('/app/news.html');
         url = "http://news.google.com/?output=rss";
         return $http.get(url).success(function(data, status, headers, config) {
           var items, newsItems, xml, xmlDoc;
@@ -67,12 +29,60 @@
           return console.log('Search Failed');
         });
       };
+      checkLogin = function() {
+        var url;
+        url = '/app/login.html';
+        if (localStorage.getItem('loggedIn')) {
+          $scope.loggedIn = true;
+          url = '/app/flight.html';
+          if (localStorage.getItem('url')) {
+            url = localStorage.getItem('url');
+            if (url === '/app/news.html') {
+              searchNews();
+            }
+          }
+        }
+        return $scope.templatePage = chrome.extension.getURL(url);
+      };
+      checkLogin();
+      convertDate = function(timestamp) {
+        var date, day, formattedDate, month, year;
+        console.log(timestamp);
+        date = new Date(timestamp * 1000);
+        day = date.getDay();
+        month = date.getMonth();
+        year = date.getFullYear();
+        formattedDate = "" + month + "/" + day + "/" + year;
+        return formattedDate;
+      };
+      $scope.login = function() {
+        $scope.loggedIn = true;
+        localStorage.setItem('loggedIn', true);
+        return $scope.templatePage = chrome.extension.getURL('/app/flight.html');
+      };
+      $scope.logout = function() {
+        $scope.loggedIn = false;
+        localStorage.setItem('loggedIn', false);
+        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
+      };
+      $scope.viewLogin = function() {
+        return $scope.templatePage = chrome.extension.getURL('/app/login.html');
+      };
+      $scope.viewFlight = function() {
+        $scope.templatePage = chrome.extension.getURL('/app/flight.html');
+        return localStorage.setItem('url', '/app/flight.html');
+      };
+      $scope.viewNews = function() {
+        $scope.templatePage = chrome.extension.getURL('/app/news.html');
+        localStorage.setItem('url', '/app/news.html');
+        return searchNews();
+      };
       $scope.viewLeisure = function() {
-        return $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
+        $scope.templatePage = chrome.extension.getURL('/app/leisure.html');
+        return localStorage.setItem('url', '/app/leisure.html');
       };
       $scope.searchFlight = function() {
         var url;
-        console.log(this.airlineNumber);
         url = "http://gogo-test.apigee.net/v1/aircraft/flightno/" + this.airlineNumber + "?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q";
         return $http.get(url).success(function(data, status, headers, config) {
           $scope.flight = data.FlightInfo;

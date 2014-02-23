@@ -5,11 +5,31 @@ Gogo = angular.module('Gogo', ['ngRoute'])
 #])
 
 @GogoCtrl =  ['$scope', '$http', '$location', ($scope, $http, $location) ->
+  searchNews = () ->
+    url = "http://news.google.com/?output=rss"
+    $http.get(url).success((data, status, headers, config)->
+      xmlDoc = $.parseXML(data)
+      xml = $(xmlDoc)
+      items = xml.find("item")
+      newsItems = []
+      items.each(() ->
+        n = {'title': $(this).find('title').text(), 'link': $(this).find('link').text() }
+        newsItems.push(n)
+      )
+      $scope.items = newsItems
+    ).error( (data, status, headers, config) ->
+      console.log 'Search Failed'
+    )
+
   checkLogin = () ->
     url = '/app/login.html'
     if localStorage.getItem('loggedIn')
-      url = '/app/flight.html'
       $scope.loggedIn = true
+      url = '/app/flight.html'
+      if localStorage.getItem('url')
+        url = localStorage.getItem('url')
+        if url == '/app/news.html'
+          searchNews()
     $scope.templatePage = chrome.extension.getURL(url)
 
   checkLogin()
@@ -29,7 +49,6 @@ Gogo = angular.module('Gogo', ['ngRoute'])
     $scope.templatePage = chrome.extension.getURL('/app/flight.html')
 
   $scope.logout = () ->
-    console.log 'logout'
     $scope.loggedIn = false
     localStorage.setItem('loggedIn',false)
     $scope.templatePage = chrome.extension.getURL('/app/login.html')
@@ -39,29 +58,18 @@ Gogo = angular.module('Gogo', ['ngRoute'])
 
   $scope.viewFlight = () ->
     $scope.templatePage = chrome.extension.getURL('/app/flight.html')
+    localStorage.setItem('url','/app/flight.html')
 
   $scope.viewNews = () ->
     $scope.templatePage = chrome.extension.getURL('/app/news.html')
-    url = "http://news.google.com/?output=rss"
-    $http.get(url).success((data, status, headers, config)->
-      xmlDoc = $.parseXML(data)
-      xml = $(xmlDoc)
-      items = xml.find("item")
-      newsItems = []
-      items.each(() ->
-        n = {'title': $(this).find('title').text(), 'link': $(this).find('link').text() }
-        newsItems.push(n)
-      )
-      $scope.items = newsItems
-    ).error( (data, status, headers, config) ->
-      console.log 'Search Failed'
-    )
+    localStorage.setItem('url','/app/news.html')
+    searchNews()
 
   $scope.viewLeisure = () ->
     $scope.templatePage = chrome.extension.getURL('/app/leisure.html')
+    localStorage.setItem('url','/app/leisure.html')
 
   $scope.searchFlight = () ->
-    console.log this.airlineNumber
     url = "http://gogo-test.apigee.net/v1/aircraft/flightno/#{this.airlineNumber}?apikey=0XOAphNPi8w4nY1LAqVnhlUIPsBDV69Q"
     $http.get(url).success((data, status, headers, config)->
       $scope.flight = data.FlightInfo
@@ -79,5 +87,4 @@ Gogo = angular.module('Gogo', ['ngRoute'])
 
   $scope.flightNotExist = () ->
     return angular.isUndefined($scope.flight)
-
 ]
