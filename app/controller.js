@@ -99,7 +99,7 @@
       };
       $scope.logout = function() {
         $scope.loggedIn = false;
-        localStorage.setItem('loggedIn', false);
+        localStorage.clear();
         return $scope.templatePage = chrome.extension.getURL('/app/login.html');
       };
       $scope.viewLogin = function() {

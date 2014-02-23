@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/gogo.css">
 </head>
-<body style="height:340px;width:350px">
+<body style="height:340px;width:350px" ng-cloak>
 <div ng-controller="GogoCtrl">
   <div class="topbar">
     <div style="position: relative;left:295px;top:15px;height:22px">
@@ -19,7 +19,7 @@
     </div>
     <div style="margin-bottom: 30px"></div>
 
-    <div id="content" class="container">
+    <div id="content" class="container" ng-cloak>
       <div ng-include="templatePage"></div>
     </div>
     <p/>

@@ -84,7 +84,8 @@ Gogo = angular.module('Gogo', ['ngRoute'])
 
   $scope.logout = () ->
     $scope.loggedIn = false
-    localStorage.setItem('loggedIn', false)
+#    localStorage.setItem('loggedIn', false)
+    localStorage.clear()
     $scope.templatePage = chrome.extension.getURL('/app/login.html')
 
   $scope.viewLogin = () ->
