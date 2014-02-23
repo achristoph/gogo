@@ -1,13 +1,14 @@
 <div id="flight">
   <form ng-submit="searchFlight()">
     <input type="text" class="form-control" ng-model="airlineNumberText" size="30"
-           placeholder="search by flight number">
+           placeholder="Search by flight number">
+    <span><br></span>
     <input class="btn btn-danger" type="submit" value="Search">
   </form>
   <p/>
 
   <div id="flightInfo" ng-hide="flightNotExist()">
-    <div ng-hide="flightSearchSucceed">Flight not Found</div>
+    <div ng-hide="flightSearchSucceed">Flight not found</div>
     <div ng-show="flightSearchSucceed">
       <div class="list-group">
         <div class="list-group-item">
